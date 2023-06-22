@@ -1,3 +1,4 @@
+import Box from "@mui/material/Box";
 import {
   addDoc,
   collection,
@@ -5,6 +6,7 @@ import {
   doc,
   getDocs,
   query,
+  updateDoc,
   where,
 } from "firebase/firestore";
 import { useState, useEffect } from "react";
@@ -18,7 +20,7 @@ import Profile from "./Profile";
 const NoteApp = () => {
   const [notes, setNotes] = useState<any>([]);
   const collectionNotes = collection(db, "notes");
-  const [user, setUser] = useState(null); // Tambahkan ini
+  const [user, setUser] = useState<any>(null); // Tambahkan ini
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -84,16 +86,41 @@ const NoteApp = () => {
     }
   };
 
+  const editNote = async (updatedNote: any) => {
+    const notePadDoc = doc(db, "notes", updatedNote.id);
+
+    if (user) {
+      try {
+        await updateDoc(notePadDoc, {
+          title: updatedNote.title,
+          content: updatedNote.content,
+        });
+        setNotes(
+          notes.map((note: any) =>
+            note.id === updatedNote.id ? updatedNote : note
+          )
+        );
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
   return (
-    <div>
+    <Box>
       <Navbar user={user} />
       {user ? (
         <>
-          <h1>Note Taking App</h1>
+          <h1>NoteApp</h1>
           <NoteForm addNote={addNote} />
           <div className="notes">
             {notes.map((note: any) => (
-              <Note key={note.id} note={note} deleteNote={deleteNote} />
+              <Note
+                key={note.id}
+                note={note}
+                deleteNote={deleteNote}
+                editNote={editNote}
+              />
             ))}
           </div>
           <Profile user={user} />
@@ -101,7 +128,7 @@ const NoteApp = () => {
       ) : (
         <Login />
       )}
-    </div>
+    </Box>
   );
 };
 

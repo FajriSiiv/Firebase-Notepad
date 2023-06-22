@@ -7,7 +7,7 @@ const Navbar = ({ user }: any) => {
 
   return (
     <nav>
-      <h1>Note Taking App</h1>
+      <h1>NoteApp</h1>
       {user && (
         <div>
           <span>Welcome, {user.email}</span>

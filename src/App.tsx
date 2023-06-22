@@ -118,14 +118,16 @@
 
 // export default App;
 
-import "./App.css";
+import { Box, Stack } from "@mui/material";
 import NoteApp from "./components/NoteApp";
 
 function App() {
   return (
-    <div className="App">
-      <NoteApp />
-    </div>
+    <Box sx={{ width: "100vw", maxWidth: "1440px" }}>
+      <Stack justifyContent="center" alignItems="center">
+        <NoteApp />
+      </Stack>
+    </Box>
   );
 }
 

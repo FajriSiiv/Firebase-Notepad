@@ -121,12 +121,6 @@ const NoteApp = () => {
   const handleClose = () => setAddModal(false);
   const handleOpen = () => setAddModal(true);
 
-  const handleAddNote = (event: any) => {
-    setAddingNote(event.target.value);
-    const lineBreaks = event.target.value.split("\n").length;
-    setRows(lineBreaks);
-  };
-
   return (
     <Box width="100%">
       <Navbar user={user} />
@@ -174,7 +168,6 @@ const NoteApp = () => {
         open={addModal}
         handleClose={handleClose}
         // rows={rows}
-        // handleAddNote={handleAddNote}
         addingNote={addingNote}
         handleSaveNote={addNote}
       />

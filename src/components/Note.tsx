@@ -9,18 +9,19 @@ import {
   Typography,
 } from "@mui/material";
 import { useState } from "react";
+import DetailNote from "./DetailNote";
 
 const Note = ({ note, deleteNote, editNote }: any) => {
-  const [editMode, setEditMode] = useState(false);
   const [updatedTitle, setUpdatedTitle] = useState(note.title);
   const [updatedContent, setUpdatedContent] = useState(note.content);
 
+  const [addingNote, setAddingNote] = useState("");
+
+  // open detail modal
+  const [detailModal, setDetailModal] = useState(false);
+
   const handleDelete = () => {
     deleteNote(note.id);
-  };
-
-  const handleEdit = () => {
-    setEditMode(true);
   };
 
   const handleUpdate = () => {
@@ -29,28 +30,31 @@ const Note = ({ note, deleteNote, editNote }: any) => {
       title: updatedTitle,
       content: updatedContent,
     };
-
+    handleCloseDetailModal();
+    console.log(updatedNote);
     editNote(updatedNote);
-    setEditMode(false);
   };
 
+  const handleOpenDetailModal = () => setDetailModal(true);
+  const handleCloseDetailModal = () => setDetailModal(false);
+
   return (
-    <Box>
-      {editMode ? (
-        <div>
-          <input
-            type="text"
-            value={updatedTitle}
-            onChange={(e) => setUpdatedTitle(e.target.value)}
-          />
-          <textarea
-            value={updatedContent}
-            onChange={(e) => setUpdatedContent(e.target.value)}
-          />
-          <button onClick={handleUpdate}>Update</button>
-        </div>
-      ) : (
-        <Card sx={{ height: "max-content", maxWidth: "400px", width: "200px" }}>
+    <>
+      <Box
+        component="div"
+        position="relative"
+        sx={{ cursor: "pointer" }}
+        onClick={handleOpenDetailModal}
+      >
+        <Card
+          sx={{
+            height: "max-content",
+            maxWidth: "400px",
+            width: "200px",
+            border: "2px solid #dcdcdc",
+            boxShadow: "none",
+          }}
+        >
           <CardContent sx={{ height: "200px", padding: "10px !important" }}>
             <Stack
               direction="column"
@@ -71,7 +75,7 @@ const Note = ({ note, deleteNote, editNote }: any) => {
                 </Typography>
               </Box>
               <Stack direction="row" justifyContent="flex-end">
-                <IconButton onClick={handleEdit} color="info">
+                <IconButton onClick={handleOpenDetailModal} color="info">
                   <Edit />
                 </IconButton>
                 <IconButton onClick={handleDelete} color="error">
@@ -81,8 +85,18 @@ const Note = ({ note, deleteNote, editNote }: any) => {
             </Stack>
           </CardContent>
         </Card>
-      )}
-    </Box>
+      </Box>
+      <DetailNote
+        open={detailModal}
+        handleClose={handleCloseDetailModal}
+        handleUpdate={handleUpdate}
+        valueTitle={updatedTitle}
+        valueContent={updatedContent}
+        setValueTitle={setUpdatedTitle}
+        setValueContent={setUpdatedContent}
+        handleDelete={handleDelete}
+      />
+    </>
   );
 };
 

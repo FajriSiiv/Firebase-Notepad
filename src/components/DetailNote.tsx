@@ -1,8 +1,7 @@
-import { Save } from "@mui/icons-material";
+import { Delete, Save } from "@mui/icons-material";
 import {
   Box,
   Button,
-  Input,
   Modal,
   Stack,
   TextField,
@@ -10,32 +9,32 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 
-const AddModal = ({
+const DetailNote = ({
   handleClose,
   open,
-  handleAddNote,
-  addingNote,
-  handleSaveNote,
+  handleUpdate,
+  valueTitle,
+  valueContent,
+  setValueTitle,
+  setValueContent,
+  handleDelete,
 }: any) => {
   const calculateRows = () => {
-    const lineBreaks = addingNote.split("\n").length;
+    const lineBreaks = valueContent.split("\n").length;
 
     return lineBreaks > 1 ? lineBreaks : 10;
   };
 
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
-    handleSaveNote({
-      title: title,
-      content: content,
-    });
-    setTitle("");
-    setContent("");
-    handleClose();
-  };
+  // const handleSubmit = (e: any) => {
+  //   e.preventDefault();
+  //   handleSaveNote({
+  //     title: title,
+  //     content: content,
+  //   });
+  //   setTitle("");
+  //   setContent("");
+  //   handleClose();
+  // };
 
   return (
     <Modal
@@ -46,7 +45,7 @@ const AddModal = ({
     >
       <Box
         component="form"
-        onSubmit={handleSubmit}
+        onSubmit={handleUpdate}
         sx={{
           bgcolor: "white",
           width: "500px",
@@ -69,8 +68,8 @@ const AddModal = ({
             id="standard-basic"
             placeholder="Title"
             fullWidth
-            onChange={(e) => setTitle(e.target.value)}
-            value={title}
+            onChange={(e) => setValueTitle(e.target.value)}
+            value={valueTitle}
           />
           <TextField
             id="standard-basic"
@@ -79,20 +78,31 @@ const AddModal = ({
             multiline
             rows={calculateRows()}
             sx={{
+              whiteSpace: "nowrap",
               "* fieldset": {
                 border: "none",
               },
             }}
-            onChange={(e) => setContent(e.target.value)}
-            value={content}
+            onChange={(e) => setValueContent(e.target.value)}
+            value={valueContent}
           />
         </Stack>
-        <Button startIcon={<Save />} sx={{ width: "100px" }} type="submit">
-          Add Note
-        </Button>
+        <Stack justifyContent="space-between" direction="row">
+          <Button startIcon={<Save />} sx={{ width: "100px" }} type="submit">
+            Save
+          </Button>
+          <Button
+            color="error"
+            startIcon={<Delete />}
+            sx={{ width: "100px" }}
+            onClick={handleDelete}
+          >
+            Delete
+          </Button>
+        </Stack>
       </Box>
     </Modal>
   );
 };
 
-export default AddModal;
+export default DetailNote;

@@ -1,3 +1,4 @@
+import { Box, Button, Stack, Typography } from "@mui/material";
 import { auth } from "../config/firebase";
 
 const Navbar = ({ user }: any) => {
@@ -6,15 +7,20 @@ const Navbar = ({ user }: any) => {
   };
 
   return (
-    <nav>
-      <h1>NoteApp</h1>
-      {user && (
-        <div>
-          <span>Welcome, {user.email}</span>
-          <button onClick={handleLogout}>Logout</button>
-        </div>
-      )}
-    </nav>
+    <Box component="nav">
+      <Stack direction="row" alignItems="center" justifyContent="space-between">
+        <Typography component="h1" variant="h5" fontWeight="bold">
+          NoteApp
+        </Typography>
+        {user && (
+          <Box>
+            <Button variant="contained" color="error" onClick={handleLogout}>
+              Logout
+            </Button>
+          </Box>
+        )}
+      </Stack>
+    </Box>
   );
 };
 

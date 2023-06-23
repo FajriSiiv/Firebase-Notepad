@@ -1,3 +1,13 @@
+import { Delete, Edit } from "@mui/icons-material";
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  IconButton,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { useState } from "react";
 
 const Note = ({ note, deleteNote, editNote }: any) => {
@@ -25,7 +35,7 @@ const Note = ({ note, deleteNote, editNote }: any) => {
   };
 
   return (
-    <div className="note">
+    <Box>
       {editMode ? (
         <div>
           <input
@@ -40,14 +50,39 @@ const Note = ({ note, deleteNote, editNote }: any) => {
           <button onClick={handleUpdate}>Update</button>
         </div>
       ) : (
-        <div>
-          <h2>{note.title}</h2>
-          <p>{note.content}</p>
-          <button onClick={handleEdit}>Edit</button>
-          <button onClick={handleDelete}>Delete</button>
-        </div>
+        <Card sx={{ height: "max-content", maxWidth: "400px", width: "200px" }}>
+          <CardContent sx={{ height: "200px", padding: "10px !important" }}>
+            <Stack
+              direction="column"
+              justifyContent="space-between"
+              sx={{ height: "100%" }}
+            >
+              <Box>
+                <Typography
+                  sx={{ marginBottom: "10px" }}
+                  variant="h5"
+                  component="h2"
+                  fontWeight="bold"
+                >
+                  {note.title}
+                </Typography>
+                <Typography variant="body2" component="p">
+                  {note.content}
+                </Typography>
+              </Box>
+              <Stack direction="row" justifyContent="flex-end">
+                <IconButton onClick={handleEdit} color="info">
+                  <Edit />
+                </IconButton>
+                <IconButton onClick={handleDelete} color="error">
+                  <Delete />
+                </IconButton>
+              </Stack>
+            </Stack>
+          </CardContent>
+        </Card>
       )}
-    </div>
+    </Box>
   );
 };
 

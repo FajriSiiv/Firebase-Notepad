@@ -1,5 +1,5 @@
 import { Add } from "@mui/icons-material";
-import { Button, IconButton, Stack } from "@mui/material";
+import { IconButton, Stack } from "@mui/material";
 import Box from "@mui/material/Box";
 import {
   addDoc,
@@ -20,17 +20,15 @@ import Note from "./Note";
 
 const NoteApp = () => {
   const [notes, setNotes] = useState<any>([]);
-  const collectionNotes = collection(db, "notes");
   const [user, setUser] = useState<any>(null); // Tambahkan ini
 
   // modal
   const [addModal, setAddModal] = useState(false);
 
   // add note
-  const [addingNote, setAddingNote] = useState("");
+  const addingNote = "";
 
   // rows modal
-  const [rows, setRows] = useState(10);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {

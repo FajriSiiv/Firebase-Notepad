@@ -1,13 +1,5 @@
 import { Delete, Save } from "@mui/icons-material";
-import {
-  Box,
-  Button,
-  Modal,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
-import { useState } from "react";
+import { Box, Button, Modal, Stack, TextField } from "@mui/material";
 
 const DetailNote = ({
   handleClose,

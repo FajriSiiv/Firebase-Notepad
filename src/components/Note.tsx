@@ -1,21 +1,18 @@
 import { Delete, Edit } from "@mui/icons-material";
 import {
   Box,
-  Button,
   Card,
   CardContent,
   IconButton,
   Stack,
   Typography,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import DetailNote from "./DetailNote";
 
 const Note = ({ note, deleteNote, editNote }: any) => {
   const [updatedTitle, setUpdatedTitle] = useState(note.title);
   const [updatedContent, setUpdatedContent] = useState(note.content);
-
-  const [addingNote, setAddingNote] = useState("");
 
   // open detail modal
   const [detailModal, setDetailModal] = useState(false);

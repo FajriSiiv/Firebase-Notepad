@@ -1,22 +1,8 @@
 import { Save } from "@mui/icons-material";
-import {
-  Box,
-  Button,
-  Input,
-  Modal,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Modal, Stack, TextField } from "@mui/material";
 import { useState } from "react";
 
-const AddModal = ({
-  handleClose,
-  open,
-  handleAddNote,
-  addingNote,
-  handleSaveNote,
-}: any) => {
+const AddModal = ({ handleClose, open, addingNote, handleSaveNote }: any) => {
   const calculateRows = () => {
     const lineBreaks = addingNote.split("\n").length;
 

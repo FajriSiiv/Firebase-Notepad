@@ -8,7 +8,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DetailNote from "./DetailNote";
 
 const Note = ({ note, deleteNote, editNote }: any) => {
@@ -20,8 +20,8 @@ const Note = ({ note, deleteNote, editNote }: any) => {
   // open detail modal
   const [detailModal, setDetailModal] = useState(false);
 
-  const handleDelete = () => {
-    deleteNote(note.id);
+  const handleDelete = async () => {
+    await deleteNote(note.id);
   };
 
   const handleUpdate = () => {
@@ -38,14 +38,11 @@ const Note = ({ note, deleteNote, editNote }: any) => {
   const handleOpenDetailModal = () => setDetailModal(true);
   const handleCloseDetailModal = () => setDetailModal(false);
 
+  console.log(note.id);
+
   return (
-    <>
-      <Box
-        component="div"
-        position="relative"
-        sx={{ cursor: "pointer" }}
-        onClick={handleOpenDetailModal}
-      >
+    <Box>
+      <Box component="div" position="relative" sx={{ cursor: "pointer" }}>
         <Card
           sx={{
             height: "max-content",
@@ -55,7 +52,10 @@ const Note = ({ note, deleteNote, editNote }: any) => {
             boxShadow: "none",
           }}
         >
-          <CardContent sx={{ height: "200px", padding: "10px !important" }}>
+          <CardContent
+            sx={{ height: "200px", padding: "10px !important" }}
+            onClick={handleOpenDetailModal}
+          >
             <Stack
               direction="column"
               justifyContent="space-between"
@@ -96,7 +96,7 @@ const Note = ({ note, deleteNote, editNote }: any) => {
         setValueContent={setUpdatedContent}
         handleDelete={handleDelete}
       />
-    </>
+    </Box>
   );
 };
 

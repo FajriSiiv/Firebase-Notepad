@@ -28,13 +28,17 @@ const AddModal = ({
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    handleSaveNote({
-      title: title,
-      content: content,
-    });
-    setTitle("");
-    setContent("");
-    handleClose();
+    if (title === "" && content === "") {
+      alert("Isi dahulu note kamu");
+    } else {
+      handleSaveNote({
+        title: title,
+        content: content,
+      });
+      setTitle("");
+      setContent("");
+      handleClose();
+    }
   };
 
   return (
@@ -87,7 +91,7 @@ const AddModal = ({
             value={content}
           />
         </Stack>
-        <Button startIcon={<Save />} sx={{ width: "100px" }} type="submit">
+        <Button startIcon={<Save />} sx={{ width: "100%" }} type="submit">
           Add Note
         </Button>
       </Box>

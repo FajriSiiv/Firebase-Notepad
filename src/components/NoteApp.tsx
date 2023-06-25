@@ -17,8 +17,6 @@ import AddModal from "./AddModal";
 import Login from "./Login";
 import Navbar from "./Navbar";
 import Note from "./Note";
-import NoteForm from "./NoteForm";
-import Profile from "./Profile";
 
 const NoteApp = () => {
   const [notes, setNotes] = useState<any>([]);
@@ -68,19 +66,18 @@ const NoteApp = () => {
   }, [user]);
 
   const addNote = async (note: any) => {
-    // const db = firebase.firestore();
-    // const docRef = await db.collection("notes").add(note);
-
-    // const docRef = await addDoc(collectionNotes, note);
-
-    // setNotes([...notes, { id: docRef.id, ...note }]);
     if (user) {
       try {
-        await addDoc(collection(db, "notes"), {
+        const docRef = await addDoc(collection(db, "notes"), {
           ...note,
           userId: user.uid,
         });
-        setNotes([...notes, note]);
+        const newNote = {
+          ...note,
+          userId: user.uid,
+          id: docRef.id,
+        };
+        setNotes([...notes, newNote]);
       } catch (error) {
         console.log(error);
       }
@@ -122,7 +119,7 @@ const NoteApp = () => {
   const handleOpen = () => setAddModal(true);
 
   return (
-    <Box width="100%">
+    <Box width="100%" height="100%">
       <Navbar user={user} />
       <Box sx={{ marginTop: "30px" }}>
         {user ? (
@@ -130,7 +127,7 @@ const NoteApp = () => {
             {/* <NoteForm addNote={addNote} /> */}
             <Stack
               direction="row"
-              flexWrap="nowrap"
+              flexWrap="wrap"
               sx={{ padding: "10px 30px" }}
               gap={3}
             >
@@ -143,7 +140,7 @@ const NoteApp = () => {
                 />
               ))}
             </Stack>
-            <Profile user={user} />
+            {/* <Profile user={user} /> */}
             <Box
               sx={{
                 position: "absolute",
